@@ -74,16 +74,16 @@ per_monitor_dpi = false
 timeout = 4
 background = "{{background}}"
 foreground = "{{foreground}}"
-frame_color = "{{color3}}"
+frame_color = "{{color11}}"
 
 [urgency_normal]
 timeout = 6
 background = "{{background}}"
 foreground = "{{foreground}}"
-frame_color = "{{color2}}"
+frame_color = "{{color10}}"
 
 [urgency_critical]
 timeout = 0
 background = "{{background}}"
 foreground = "{{foreground}}"
-frame_color = "{{color1}}"
+frame_color = "{{color9}}"

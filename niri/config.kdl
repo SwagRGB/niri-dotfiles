@@ -60,20 +60,20 @@ binds {
     MOD+B                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox"; }
     MOD+ALT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
     MOD+E                               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
-    MOD+BACKSPACE                       hotkey-overlay-title="Power Menu: rofi" { spawn-sh "$HOME/.config/rofi/powermenu/powermenu.sh"; }
+    CTRL+ALT+ESCAPE                     hotkey-overlay-title="Power Menu: rofi" { spawn-sh "$HOME/.config/rofi/powermenu/powermenu.sh"; }
     MOD+CTRL+W                          hotkey-overlay-title="Open Wallpaper Selector: rofi" { spawn-sh "$HOME/.config/rofi/bgselector/bgselector.sh"; }
 
     // Media Keys
-    XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh volume_up"; }
-    XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh volume_down"; }
-    XF86MonBrightnessUp                 allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh brightness_up"; }
-    XF86MonBrightnessDown               allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh brightness_down"; }
-    XF86AudioMute                       allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh volume_mute"; }
-    XF86AudioMicMute                    allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh mic_mute"; }
-    XF86AudioNext                       allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh next_track"; }
-    XF86AudioPause                      allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh play_pause"; }
-    XF86AudioPlay                       allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh play_pausse"; }
-    XF86AudioPrev                       allow-when-locked=true { spawn-sh "$HOME/.config/scripts/volume-brightness.sh prev_track"; }
+    XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "mediactl volume_up"; }
+    XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "mediactl volume_down"; }
+    XF86MonBrightnessUp                 allow-when-locked=true { spawn-sh "mediactl brightness_up"; }
+    XF86MonBrightnessDown               allow-when-locked=true { spawn-sh "mediactl brightness_down"; }
+    XF86AudioMute                       allow-when-locked=true { spawn-sh "mediactl volume_mute"; }
+    XF86AudioMicMute                    allow-when-locked=true { spawn-sh "mediactl mic_mute"; }
+    XF86AudioNext                       allow-when-locked=true { spawn-sh "mediactl next_track"; }
+    XF86AudioPause                      allow-when-locked=true { spawn-sh "mediactl play_pause"; }
+    XF86AudioPlay                       allow-when-locked=true { spawn-sh "mediactl play_pausse"; }
+    XF86AudioPrev                       allow-when-locked=true { spawn-sh "mediactl prev_track"; }
 
     // Window Management
     MOD+Q                               { close-window; }
@@ -307,7 +307,7 @@ window-rule {
 
 // System dialogs
 window-rule {
-    match title=r#".*(Dialog|Properties|Preferences|Settings).*"#
+    match title=r#".*(Dialog|Properties|Preferences|Settings|Rename).*"#
     open-floating true
 }
 
@@ -353,7 +353,6 @@ window-rule {
     match app-id=r#"pavucontrol"#
     open-floating true
 }
-
 
 // Steam dialogs
 window-rule {

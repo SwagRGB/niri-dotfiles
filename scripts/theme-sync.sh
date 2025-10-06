@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-sleep 0.1
+sleep 0.8 # let swww set the wallpaper
 
 # Source common utilities if available
 if [[ -f "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh" ]]; then
@@ -709,13 +709,12 @@ main() {
 
   # Only apply themes if theme/variation changed
   if [[ $theme_changed -eq 1 ]]; then
-    pkill dunst || dunst &
-
     set_gtk_theme "$gtk_theme"
     set_icon_theme "$icon_theme"
     run_wallust_theme "$wallust_theme" "$wallpaper_path"
     update_niri_config
     update_vscode_theme
+    makoctl reload 2> /dev/null || log_warn "Failed to reload mako"
     save_theme_state "$detected_theme" "$wallpaper_variation"
 
     log_success "Dynamic theme synchronization completed successfully"
@@ -729,3 +728,4 @@ main() {
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   main "$@"
 fi
+

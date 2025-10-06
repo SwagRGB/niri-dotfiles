@@ -64,6 +64,7 @@ window#waybar {
 #battery.charging { color: @color2; }
 #battery.warning { color: @color3; }
 #battery.plugordie { color: @color1; }
+#battery.critical { color: @color2; }
 
 tooltip *,
 tooltip {

@@ -28,7 +28,6 @@ obs-studio/
 LosslessCut/
 inkscape/
 obsidian/
-spotify-player/
 kew/lastPlaylist.m3u
 kew/kewlibrary
 
@@ -59,6 +58,7 @@ deluge/
 # Desktop Environment & Frameworks
 kde.org/
 ego/
+cachyos/
 gtk-3.0/
 gtk-4.0/
 qt6ct/
@@ -79,37 +79,5 @@ pulse/
 Electron/
 Notion/
 
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyc
-
-# Environment & Secrets
 *.env
-.env.*
-!shell.env
-
-# Temporary & Cache Files
-*.tmp
-*.temp
-*.cache
-*.log
-*.pid
-*.lock
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
-
-# Backup Files
-*.bak
-*.backup
-*.orig
-*.save
-
-# Linux
-.directory
-.Trash-*
-cachyos/
+temp.md

@@ -1,0 +1,20 @@
+{
+    "closeOnFocusLoss": true,
+    "faviconService": "google",
+    "font": {
+        "size": 10
+    },
+    "keybinding": "default",
+    "popToRootOnClose": false,
+    "rootSearch": {
+        "searchFiles": false
+    },
+    "theme": {
+        "name": "catppuccin-mocha.json"
+    },
+    "window": {
+        "csd": false,
+        "opacity": 1,
+        "rounding": 0
+    }
+}

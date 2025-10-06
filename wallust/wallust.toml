@@ -50,8 +50,6 @@ kitty = { src = 'kitty.conf', dst = '~/.config/kitty/colors.conf' }
 
 waybar = { src = 'waybar.css', dst = '~/.config/waybar/colors.css' }
 
-dunst = { src = 'dunstrc', dst = '~/.config/dunst/dunstrc' }
-
 gtk3 = { src = 'gtk.css', dst = '~/.config/gtk-3.0/colors.css' }
 
 gtk4 = { src = 'gtk.css', dst = '~/.config/gtk-4.0/colors.css' }
@@ -63,3 +61,8 @@ vscode2 = { src = 'vscode', dst = '~/.cache/wallust/colors' }
 neopywal = { src = 'neopywal.vim', dst = '~/.cache/wallust/colors_neopywal.vim' }
 
 rofi = { src = 'rofi.rasi', dst = '~/.config/rofi/colors/wallust.rasi' }
+
+mako = { src = 'mako', dst = '~/.config/mako/config' }
+
+zathurarc = { src = 'zathurarc', dst = '~/.config/zathura/zathurarc' }
+
