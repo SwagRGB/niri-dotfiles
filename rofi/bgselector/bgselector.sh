@@ -8,110 +8,73 @@ mkdir -p "$CACHE_DIR"
 
 # Build current wallpaper index
 current_index=$(mktemp)
-find "$WALL_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.bmp' -o -iname '*.tiff' -o -iname '*.avif' \) -printf '%p\t%T@\n' | sort > "$current_index"
+find "$WALL_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.bmp' -o -iname '*.tiff' -o -iname '*.avif' \) -printf '%p\n' > "$current_index"
 
-# Clean orphaned cache files if index exists
+# Clean orphaned cache files
 if [ -f "$CACHE_INDEX" ]; then
-    while IFS=$'\t' read -r cached_path _; do
+    while read -r cached_path; do
         if [ ! -f "$cached_path" ]; then
             rel_path="${cached_path#$WALL_DIR/}"
             cache_name="${rel_path//\//_}"
+            cache_name="${cache_name%.*}.jpg"
             rm -f "$CACHE_DIR/$cache_name"
         fi
     done < "$CACHE_INDEX"
 fi
 
-# Count images needing thumbnails
-total_images=0
-missing_count=0
-while IFS=$'\t' read -r img _; do
-    ((total_images++))
+# Generate thumbnails with validation
+progress_file=$(mktemp)
+touch "$progress_file"
+job_count=0
+
+while read -r img; do
     rel_path="${img#$WALL_DIR/}"
     cache_name="${rel_path//\//_}"
-    [ ! -f "$CACHE_DIR/$cache_name" ] && ((missing_count++))
-done < "$current_index"
-
-if [ $missing_count -gt 0 ]; then
-    echo "Building cache: 0/$missing_count (0%)"
-fi
-
-# Generate thumbnails function
-generate_thumbnail() {
-    local img="$1"
-    local progress_file="$2"
-    local rel_path="${img#$WALL_DIR/}"
-    local cache_name="${rel_path//\//_}"
-    local cache_file="$CACHE_DIR/$cache_name"
+    cache_name="${cache_name%.*}.jpg"
+    cache_file="$CACHE_DIR/$cache_name"
     
-    [ -f "$cache_file" ] && return
+    [ -f "$cache_file" ] && continue
     
-    if [[ "$img" =~ \.(gif|GIF)$ ]]; then
-        magick "$img[0]" -strip -thumbnail 330x540^ -gravity center -extent 330x540 +repage "$cache_file" 2>/dev/null
-    else
-        magick "$img" -strip -thumbnail 330x540^ -gravity center -extent 330x540 +repage "$cache_file" 2>/dev/null
-    fi
-    
-    echo "1" >> "$progress_file"
-}
-
-export -f generate_thumbnail
-export WALL_DIR CACHE_DIR
-
-# Parallel thumbnail generation with progress tracking
-if [ $missing_count -gt 0 ]; then
-    progress_file=$(mktemp)
-    touch "$progress_file"
-    
-    # Start thumbnail generation in background
     (
-        while IFS=$'\t' read -r img _; do
-            rel_path="${img#$WALL_DIR/}"
-            cache_name="${rel_path//\//_}"
-            [ ! -f "$CACHE_DIR/$cache_name" ] && echo "$img"
-        done < "$current_index" | xargs -P 4 -I {} bash -c 'generate_thumbnail "$@"' _ {} "$progress_file"
+        if [[ "$img" =~ \.(gif|GIF)$ ]]; then
+            magick "$img[0]" -strip -thumbnail 330x540^ -gravity center -extent 330x540 -quality 80 +repage "$cache_file" 2>/dev/null
+        else
+            magick "$img" -strip -thumbnail 330x540^ -gravity center -extent 330x540 -quality 80 +repage "$cache_file" 2>/dev/null
+        fi
+        [ -f "$cache_file" ] && echo "1" >> "$progress_file"
     ) &
     
-    generation_pid=$!
-    
-    # Monitor progress
-    last_count=0
-    while kill -0 $generation_pid 2>/dev/null; do
-        completed=$(wc -l < "$progress_file" 2>/dev/null || echo 0)
-        if [ "$completed" != "$last_count" ]; then
-            percent=$((completed * 100 / missing_count))
-            echo -ne "\rBuilding cache: $completed/$missing_count ($percent%)"
-            last_count=$completed
-        fi
-        sleep 0.2
-    done
-    
-    wait $generation_pid
-    echo -e "\rBuilding cache: $missing_count/$missing_count (100%)"
-    rm -f "$progress_file"
-else
-    echo "Cache up to date"
-fi
+    ((job_count++))
+    if [ $((job_count % 4)) -eq 0 ]; then
+        wait -n
+    fi
+done < "$current_index"
+
+wait
+
+total_generated=$(wc -l < "$progress_file" 2>/dev/null || echo 0)
+[ $total_generated -gt 0 ] && echo "Generated $total_generated thumbnails" || echo "Cache up to date"
+rm -f "$progress_file"
 
 # Update cache index
 mv "$current_index" "$CACHE_INDEX"
 
-# Build rofi list efficiently
+# Build rofi list
 rofi_input=$(mktemp)
-while IFS=$'\t' read -r img _; do
+while read -r img; do
     rel_path="${img#$WALL_DIR/}"
     cache_name="${rel_path//\//_}"
+    cache_name="${cache_name%.*}.jpg"
     cache_file="$CACHE_DIR/$cache_name"
     
-    if [ -f "$cache_file" ]; then
-        printf '%s\000icon\037%s\n' "$rel_path" "$cache_file"
-    fi
+    [ -f "$cache_file" ] && printf '%s\000icon\037%s\n' "$rel_path" "$cache_file"
 done < "$CACHE_INDEX" > "$rofi_input"
 
 # Show rofi and get selection
 selected=$(rofi -dmenu -show-icons -config "$HOME/.config/rofi/bgselector/style.rasi" < "$rofi_input")
 rm "$rofi_input"
 
-# Apply wallpaper if selected
+# Apply wallpaper
 if [ -n "$selected" ]; then
     selected_path="$WALL_DIR/$selected"
     if [ -f "$selected_path" ]; then

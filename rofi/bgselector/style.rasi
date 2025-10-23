@@ -25,10 +25,10 @@ configuration {
 	kb-mode-next: "Shift+Right,Control+Tab";
 	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
 	kb-mode-complete: "Control+p";
-	kb-row-left: "Ctrl+h";
-	kb-row-right: "Ctrl+l";
-	kb-row-down: "Down,Ctrl+j";
-	kb-row-up: "Up,Ctrl+k";
+	kb-row-left: "h";
+	kb-row-right: "l";
+	kb-row-down: "j";
+	kb-row-up: "k";
 	kb-page-prev: "Page_Up";
 	kb-page-next: "Page_Down";
 	kb-row-first: "Home,KP_Home";
