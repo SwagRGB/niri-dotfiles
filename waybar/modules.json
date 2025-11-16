@@ -68,6 +68,9 @@
     "interval": 1,
     "format": "{:%H
 %M}",
+    "format-alt": "{:%d
+%m
+%y}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>"
 },
 "mpris": {
@@ -135,6 +138,7 @@
   "format-off": "<span size='14pt'>󰂲</span>",
   "format-disabled": "<span size='14pt'>󰂲</span>",
   "format-connected": "<span size='14pt'>󰂱</span>",
+  "format-no-controller": "span size='14pt'>󰂯</span>",
   "tooltip": true,
   "tooltip-format": "{device_enumerate}",
   "tooltip-format-enumerate-connected": "{device_address}",
@@ -147,6 +151,7 @@
   "format-source": "<span size='14pt'>󰍬</span>",
   "format-source-muted": "<span size='14pt'>󰍭</span>",
   "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+  "on-click-right": "pavucontrol -t 4",
   "tooltip": false
 },
 "pulseaudio/slider": {
@@ -163,7 +168,7 @@
     "<span size='14pt'>󰕾</span>"
   ],
   "format-muted": "<span size='14pt'>󰝟</span>",
-  "on-click-right": "pavucontrol",
+  "on-click-right": "pavucontrol -t 3",
   "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
   "reverse-scrolling": true,
   "tooltip": true,

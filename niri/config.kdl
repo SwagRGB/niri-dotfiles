@@ -59,10 +59,10 @@ binds {
     MOD+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "alacritty"; }
     MOD+A                               hotkey-overlay-title="Open App Launcher: vicinae" { spawn-sh "vicinae toggle"; }
     MOD+B                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox-developer-edition"; }
+    MOD+SHIFT+B                         hotkey-overlay-title="Open Secondary Browser: chrome" { spawn-sh "google-chrome-stable --enable-features=TouchpadOverscrollHistoryNavigation"; }
     MOD+ALT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
     MOD+E                               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
     MOD+W                               hotkey-overlay-title="Open Wallpaper Selector: rofi" { spawn-sh "$HOME/.config/rofi/bgselector/bgselector.sh"; }
-    MOD+O                               hotkey-overlay-title="Keyboard Mouse: wl-kbptr" { spawn-sh "pgrep -x wl-kbptr >/dev/null || wl-kbptr &"; }
 
     // Media Keys
     XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "mediactl volume_up"; }

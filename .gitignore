@@ -6,6 +6,7 @@ Kiro/
 configstore/
 blender/
 zed/
+acli/
 
 # Development Tools & Languages
 go/
@@ -55,6 +56,7 @@ qView/
 libvirt/
 gnome-boxes/
 deluge/
+rustdesk/
 
 # Desktop Environment & Frameworks
 kde.org/

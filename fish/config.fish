@@ -13,13 +13,16 @@ if status is-interactive
 end
 
 # Format man pages
-set -x MANROFFOPT "-c"
+set -x MANROFFOPT -c
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 # Source fish_profile if exists
 if test -f ~/.fish_profile
     source ~/.fish_profile
 end
+
+# Node.js (bundled ICU)
+set -gx PATH /opt/node/bin $PATH
 
 # PATH additions
 for p in ~/.local/bin ~/Applications/depot_tools
@@ -45,7 +48,8 @@ end
 function __history_previous_command
     switch (commandline -t)
         case "!"
-            commandline -t $history[1]; commandline -f repaint
+            commandline -t $history[1]
+            commandline -f repaint
         case "*"
             commandline -i !
     end
@@ -98,18 +102,30 @@ function extract
     set file $argv[1]
     if test -f $file
         switch $file
-            case '*.tar.bz2'; tar xjf $file
-            case '*.tar.gz';  tar xzf $file
-            case '*.bz2';     bunzip2 $file
-            case '*.rar';     unrar x $file
-            case '*.gz';      gunzip $file
-            case '*.tar';     tar xvf $file
-            case '*.tbz2';    tar xjf $file
-            case '*.tgz';     tar xzf $file
-            case '*.zip';     unzip $file
-            case '*.Z';       uncompress $file
-            case '*.7z';      7z x $file
-            case '*';         echo "'$file' cannot be extracted via extract()"
+            case '*.tar.bz2'
+                tar xjf $file
+            case '*.tar.gz'
+                tar xzf $file
+            case '*.bz2'
+                bunzip2 $file
+            case '*.rar'
+                unrar x $file
+            case '*.gz'
+                gunzip $file
+            case '*.tar'
+                tar xvf $file
+            case '*.tbz2'
+                tar xjf $file
+            case '*.tgz'
+                tar xzf $file
+            case '*.zip'
+                unzip $file
+            case '*.Z'
+                uncompress $file
+            case '*.7z'
+                7z x $file
+            case '*'
+                echo "'$file' cannot be extracted via extract()"
         end
     else
         echo "'$file' is not a valid file"
@@ -197,4 +213,7 @@ set -gx FLUTTER_HOME $ANDROID_HOME/flutter
 set -gx PATH $FLUTTER_HOME/bin $PATH
 set -gx CHROME_EXECUTABLE /usr/bin/google-chrome-stable
 
-string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-path fish)
+string match -q "$TERM_PROGRAM" kiro and . (kiro --locate-shell-integration-path fish)
+
+# opencode
+fish_add_path /home/saatvik333/.opencode/bin
