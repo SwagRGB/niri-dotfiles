@@ -2,6 +2,7 @@
 Code/
 Cursor/
 .vscode/
+.factory/
 Kiro/
 configstore/
 blender/
@@ -27,6 +28,7 @@ Slack/
 
 # Media & Entertainment
 spotify/
+spotify-player/
 obs-studio/
 LosslessCut/
 inkscape/
@@ -45,6 +47,7 @@ thefuck/
 qBittorrent/
 sherlock/
 eog/
+autostart/
 ranger/
 nautilus/
 bottom/
@@ -85,4 +88,5 @@ Electron/
 Notion/
 
 *.env
+*.swp.*
 temp.md

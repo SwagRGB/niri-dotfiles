@@ -1,14 +1,9 @@
 # Disable greeting
 set -U fish_greeting ""
 
-# Gemini CLI
-if test -f $HOME/.config/gemini.env
-    source $HOME/.config/gemini.env
-end
-
 # Starship prompt
 if status is-interactive
-    set -gx STARSHIP_CONFIG ~/.config/starship/starship.toml
+    set -gx STARSHIP_CONFIG $HOME/.config/starship/starship.toml
     starship init fish | source
 end
 
@@ -17,15 +12,15 @@ set -x MANROFFOPT -c
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 # Source fish_profile if exists
-if test -f ~/.fish_profile
-    source ~/.fish_profile
+if test -f $HOME/.fish_profile
+    source $HOME/.fish_profile
 end
 
 # Node.js (bundled ICU)
 set -gx PATH /opt/node/bin $PATH
 
 # PATH additions
-for p in ~/.local/bin ~/Applications/depot_tools
+for p in $HOME/.local/bin $HOME/Applications/depot_tools
     if test -d $p
         if not contains -- $p $PATH
             set -p PATH $p
@@ -33,9 +28,9 @@ for p in ~/.local/bin ~/Applications/depot_tools
     end
 end
 
-######################
-### Key Bindings  ####
-######################
+#####################
+### Key Bindings  ###
+#####################
 # Enable vim bindings
 set -U fish_key_bindings fish_vi_key_bindings
 
@@ -157,7 +152,6 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
 # Arch helpers
-alias big="expac -H M '%m\t%n' | sort -h | nl"
 alias gitpkg='pacman -Q | grep -i "\-git" | wc -l'
 alias update='sudo pacman -Syu'
 alias mirror="sudo cachyos-rate-mirrors"
@@ -167,12 +161,9 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 alias apt='man pacman'
 alias apt-get='man pacman'
 alias please='sudo'
-alias tb='nc termbin.com 9999'
 alias jctl="journalctl -p 3 -xb"
-alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias nf='neofetch'
 alias ff='fastfetch'
-alias uf='uwufetch'
 alias q='exit'
 alias h='history'
 alias c='clear'
@@ -197,23 +188,11 @@ alias remove='yay -Rns'
 alias shutdown='systemctl poweroff'
 alias du='dust'
 
-##################
+###################
 ### Environment ###
-##################
+###################
 set -gx SHELL_CONFIG_DIR $HOME/.config
 set -gx GOPATH $HOME/go
 set -gx PATH $GOPATH/bin $PATH
 set -gx CARGO_HOME $HOME/.cargo
 set -gx PATH $CARGO_HOME/bin $PATH
-set -gx ANDROID_HOME $HOME/Android
-set -gx ANDROID_SDK_ROOT $ANDROID_HOME/sdk
-set -gx PATH $ANDROID_SDK_ROOT/cmdline-tools/latest/bin $PATH
-set -gx PATH $ANDROID_SDK_ROOT/platform-tools $PATH
-set -gx FLUTTER_HOME $ANDROID_HOME/flutter
-set -gx PATH $FLUTTER_HOME/bin $PATH
-set -gx CHROME_EXECUTABLE /usr/bin/google-chrome-stable
-
-string match -q "$TERM_PROGRAM" kiro and . (kiro --locate-shell-integration-path fish)
-
-# opencode
-fish_add_path /home/saatvik333/.opencode/bin
