@@ -710,6 +710,14 @@ main() {
     else
       log_warn "makoctl not available, skipping notification daemon reload"
     fi
+
+    if command -v niri-switch-daemon > /dev/null 2>&1; then
+      pkill -f niri-switch-daemon || true
+      sleep 0.5
+      niri-switch-daemon > /dev/null 2>&1 &
+      log_info "Restarted niri-switch-daemon"
+    fi
+
     save_theme_state "$detected_theme" "$wallpaper_variation"
 
     log_success "Dynamic theme synchronization completed successfully"

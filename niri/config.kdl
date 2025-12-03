@@ -3,7 +3,7 @@ spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 spawn-at-startup "swww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "sh" "-c" "vicinae server &"
-// spawn-at-startup "niri-switch-daemon"
+spawn-at-startup "niri-switch-daemon"
 
 // General Settings
 prefer-no-csd
@@ -18,7 +18,7 @@ input {
     keyboard {
         xkb {
             layout "us"
-            options "caps:escape,altwin:swap_alt_win"
+            options "caps:escape"
         }
     }
 
