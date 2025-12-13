@@ -25,7 +25,7 @@ AUR_HELPER=""
 
 # Progress tracking
 CURRENT_STEP=0
-readonly TOTAL_STEPS=19
+readonly TOTAL_STEPS=18
 
 # Installation summary tracking
 declare -a INSTALL_SUMMARY=()
@@ -318,7 +318,7 @@ check_disk_space() {
     printf "\n"
     
     local reply
-    read -r -p "Continue anyway? (y/N): " reply
+    read -r -p "Continue anyway? (y/N): " reply < /dev/tty
     printf "\n"
     
     if [[ ! "${reply}" =~ ^[Yy]$ ]]; then
@@ -415,7 +415,7 @@ offer_restore() {
     printf "\n"
     
     local reply
-    read -r -p "Would you like to restore your backup now? (y/N): " reply
+    read -r -p "Would you like to restore your backup now? (y/N): " reply < /dev/tty
     printf "\n"
     
     if [[ "${reply}" =~ ^[Yy]$ ]]; then
@@ -805,7 +805,7 @@ configure_shells() {
   printf "\n"
   
   local reply
-  read -r -p "Enter your choice (1-4) [default: 3]: " reply
+  read -r -p "Enter your choice (1-4) [default: 3]: " reply < /dev/tty
   printf "\n"
 
   case "${reply}" in
@@ -878,7 +878,7 @@ configure_shells() {
 source \${HOME}/.config/zsh/config.zsh
 
 # Prevent zsh-newuser-install wizard
-zstyle :compinstall filename '/home/${USER}/.zshrc'
+zstyle :compinstall filename '${HOME}/.zshrc'
 EOF
     msg "Configured .zshrc to source config.zsh"
   fi
@@ -923,7 +923,7 @@ set_default_shell() {
   printf "\n"
   
   local reply
-  read -r -p "Enter your choice (1-${max_option}) [default: 1]: " reply
+  read -r -p "Enter your choice (1-${max_option}) [default: 1]: " reply < /dev/tty
   printf "\n"
 
   if [[ -z "${reply}" ]] || [[ "${reply}" == "1" ]]; then
@@ -1200,7 +1200,7 @@ EOF
     printf "\n"
     
     local reply
-    read -r -p "Would you like to remove the backup directory? (y/N): " reply
+    read -r -p "Would you like to remove the backup directory? (y/N): " reply < /dev/tty
     printf "\n"
     
     if [[ "${reply}" =~ ^[Yy]$ ]]; then
@@ -1275,6 +1275,10 @@ main() {
   set_default_shell
   add_summary "Default shell configured"
 
+  step "Creating Configuration Backup"
+  create_backup
+  add_summary "Existing configurations backed up to ${BACKUP_DIR}"
+
   step "Cloning Dotfiles Repository"
   clone_or_update_dotfiles
   add_summary "Dotfiles repository cloned from ${REPO_URL}"
@@ -1282,10 +1286,6 @@ main() {
   step "Validating Repository Structure"
   validate_repo_structure
   add_summary "Repository structure validated"
-
-  step "Creating Configuration Backup"
-  create_backup
-  add_summary "Existing configurations backed up to ${BACKUP_DIR}"
   
   step "Creating Symbolic Links"
   create_symlinks
@@ -1293,7 +1293,7 @@ main() {
   
   step "Installing Wallpapers"
   install_wallpapers
-  add_summary "Wallpapers installed to ~/Pictures/wallpapers"
+  add_summary "Wallpapers installed to ~/Pictures/Wallpapers"
   
   step "Configuring System Services"
   create_systemd_services
