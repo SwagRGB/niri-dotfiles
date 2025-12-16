@@ -7,7 +7,7 @@
 
 ---
 
-### 📸 Gallery
+### Gallery
 
 <table>
   <tr>
