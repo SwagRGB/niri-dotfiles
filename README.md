@@ -1,9 +1,29 @@
 # Niri WM Dotfiles
 
-Productive and clean niri configuration setup.
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b9221fe9-6e8f-4e26-b2a4-a67170512824" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c1184029-71d6-49a7-abb1-57661f738bad" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fba3cdae-5bbf-497c-b9f8-0cbd11c64d49" />
+<div align="center">
+
+**A productive and clean [Niri](https://github.com/YaLTeR/niri) configuration setup**  
+*Dynamic theming • Borderless layouts • Minimal*
+
+---
+
+### 📸 Gallery
+
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/b9221fe9-6e8f-4e26-b2a4-a67170512824" alt="Desktop View"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/c1184029-71d6-49a7-abb1-57661f738bad" alt="Workspace View"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/fba3cdae-5bbf-497c-b9f8-0cbd11c64d49" alt="Application Launcher"/></td>
+  </tr>
+</table>
+
+---
+
+</div>
 
 ## Contents
 
@@ -275,14 +295,3 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 
 ---
 
-## Configuration Notes
-
-- The configuration uses a **borderless, gapless** layout by default
-- Inactive windows have **90% opacity** for better visual distinction
-- All windows have **0px corner radius** for a minimal look
-- Focus follows mouse is enabled
-- Workspace auto back-and-forth is enabled
-- Cursor hides after 5 seconds of inactivity or when typing
-- Several window rules are configured for floating dialogs, file choosers, and system utilities
-
-For more detailed configuration, check out the `config.kdl` file in this repository.
